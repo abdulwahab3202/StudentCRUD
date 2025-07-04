@@ -24,13 +24,15 @@ public class StudentController {
     }
 
     @GetMapping("/list")
-    public List<Student> getStudents(){
-        return studentService.getStudents();
+    public ResponseEntity<CommonResponce> getStudents(){
+        CommonResponce response = studentService.getStudents();
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @GetMapping("/{id}")
-    public Optional<Student> getStudentByID(@PathVariable String id){
-        return studentService.getStudentByID(id);
+    public ResponseEntity<CommonResponce> getStudentByID(@PathVariable String id){
+        CommonResponce response = studentService.getStudentByID(id);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @PutMapping("/update")
@@ -40,8 +42,8 @@ public class StudentController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteStudent(@PathVariable String id){
-        studentService.deleteStudentByID(id);
-        return "Student Deleted Successfully";
+    public ResponseEntity<CommonResponce> deleteStudentByID(@PathVariable String id){
+        CommonResponce response = studentService.deleteStudentByID(id);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 }
