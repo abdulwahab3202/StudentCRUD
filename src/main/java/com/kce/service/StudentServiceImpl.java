@@ -21,6 +21,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public void deleteStudentByID(String id) {
+        studentRepository.deleteById(id);
+    }
+
+    @Override
     public CommonResponce updateStudent(Student student) {
         CommonResponce response = new CommonResponce();
         try{

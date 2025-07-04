@@ -11,4 +11,5 @@ public interface StudentService {
     public List<Student> getStudents();
     public Optional<Student> getStudentByID(String id);
     public CommonResponce updateStudent(Student student);
+    public void deleteStudentByID(String id);
 }

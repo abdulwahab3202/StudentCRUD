@@ -38,4 +38,10 @@ public class StudentController {
         CommonResponce response = studentService.updateStudent(student);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable String id){
+        studentService.deleteStudentByID(id);
+        return "Student Deleted Successfully";
+    }
 }
