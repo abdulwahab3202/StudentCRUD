@@ -16,13 +16,42 @@ public class StudentServiceImpl implements StudentService {
     private StudentRepository studentRepository;
 
     @Override
-    public Optional<Student> getStudentByID(String id) {
-        return studentRepository.findById(id);
+    public CommonResponce getStudentByID(String id) {
+        Optional<Student> student =  studentRepository.findById(id);
+        try{
+            CommonResponce response = new CommonResponce();
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setSuccessMessage("Student retrieved successfully");
+            response.setData(student);
+            response.setCode(200);
+            return response;
+        }
+        catch (Exception e){
+            CommonResponce response = new CommonResponce();
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setErrorMessage("Failed to retrieve student");
+            response.setCode(500);
+            return response;
+        }
     }
 
     @Override
-    public void deleteStudentByID(String id) {
+    public CommonResponce deleteStudentByID(String id) {
         studentRepository.deleteById(id);
+        try{
+            CommonResponce response = new CommonResponce();
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setSuccessMessage("Student deleted successfully");
+            response.setCode(200);
+            return response;
+        }
+        catch (Exception e){
+            CommonResponce response = new CommonResponce();
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setErrorMessage("Failed to delete student");
+            response.setCode(500);
+            return response;
+        }
     }
 
     @Override
@@ -59,8 +88,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getStudents() {
-        return studentRepository.findAll();
+    public CommonResponce getStudents() {
+        List<Student> students = studentRepository.findAll();
+        try{
+            CommonResponce response = new CommonResponce();
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setSuccessMessage("Students retrieved successfully");
+            response.setData(students);
+            response.setCode(200);
+            return response;
+        }
+        catch (Exception e){
+            CommonResponce response = new CommonResponce();
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setErrorMessage("Failed to retrieve students");
+            response.setCode(500);
+            return response;
+        }
     }
 
     @Override

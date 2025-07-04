@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface StudentService {
     public CommonResponce addStudent(Student student);
-    public List<Student> getStudents();
-    public Optional<Student> getStudentByID(String id);
+    public CommonResponce getStudents();
+    public CommonResponce getStudentByID(String id);
     public CommonResponce updateStudent(Student student);
-    public void deleteStudentByID(String id);
+    public CommonResponce deleteStudentByID(String id);
 }
