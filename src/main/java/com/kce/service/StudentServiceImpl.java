@@ -17,8 +17,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public CommonResponce getStudentByID(String id) {
-        Optional<Student> student =  studentRepository.findById(id);
         try{
+            Optional<Student> student =  studentRepository.findById(id);
             CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setSuccessMessage("Student retrieved successfully");
@@ -37,18 +37,26 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public CommonResponce deleteStudentByID(String id) {
-        studentRepository.deleteById(id);
+        CommonResponce response = new CommonResponce();
         try{
-            CommonResponce response = new CommonResponce();
-            response.setStatus(ResponseStatus.SUCCESS);
-            response.setSuccessMessage("Student deleted successfully");
-            response.setCode(200);
-            return response;
+            Optional<Student> existingStudent = studentRepository.findById(id);
+            if(existingStudent.isPresent()){
+                studentRepository.deleteById(id);
+                response.setStatus(ResponseStatus.SUCCESS);
+                response.setSuccessMessage("Student Deleted Successfully");
+                response.setCode(200);
+                return response;
+            }
+            else {
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setErrorMessage("Student not found");
+                response.setCode(404);
+                return response;
+            }
         }
         catch (Exception e){
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.FAILURE);
-            response.setErrorMessage("Failed to delete student");
+            response.setErrorMessage("Failed to delete student : " +  e.getMessage());
             response.setCode(500);
             return response;
         }
@@ -89,8 +97,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public CommonResponce getStudents() {
-        List<Student> students = studentRepository.findAll();
         try{
+            List<Student> students = studentRepository.findAll();
             CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setSuccessMessage("Students retrieved successfully");
@@ -109,8 +117,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public CommonResponce addStudent(Student student) {
-        Student addedStudent = studentRepository.save(student);
         try{
+            Student addedStudent = studentRepository.save(student);
             CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setSuccessMessage("Student Created Successfully");
