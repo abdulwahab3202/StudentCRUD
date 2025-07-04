@@ -10,4 +10,5 @@ public interface StudentService {
     public CommonResponce addStudent(Student student);
     public List<Student> getStudents();
     public Optional<Student> getStudentByID(String id);
+    public CommonResponce updateStudent(Student student);
 }
