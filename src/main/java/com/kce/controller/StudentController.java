@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
@@ -25,5 +26,10 @@ public class StudentController {
     @GetMapping("/list")
     public List<Student> getStudents(){
         return studentService.getStudents();
+    }
+
+    @GetMapping("/list/{id}")
+    public Optional<Student> getStudentByID(@PathVariable String id){
+        return studentService.getStudentByID(id);
     }
 }
