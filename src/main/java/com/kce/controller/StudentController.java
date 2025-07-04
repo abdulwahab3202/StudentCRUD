@@ -19,7 +19,7 @@ public class StudentController {
 
     @PostMapping("/add")
     public ResponseEntity<CommonResponce> addStudent(@RequestBody Student student){
-        CommonResponce response=studentService.addStudent(student);
+        CommonResponce response = studentService.addStudent(student);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 
@@ -31,5 +31,11 @@ public class StudentController {
     @GetMapping("/list/{id}")
     public Optional<Student> getStudentByID(@PathVariable String id){
         return studentService.getStudentByID(id);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<CommonResponce> updateStudent(@RequestBody Student student){
+        CommonResponce response = studentService.updateStudent(student);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 }
