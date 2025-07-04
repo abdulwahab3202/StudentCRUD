@@ -8,10 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentRepository studentRepository;
+
+    @Override
+    public List<Student> getStudents() {
+        return studentRepository.findAll();
+    }
 
     @Override
     public CommonResponce addStudent(Student student) {
