@@ -1,6 +1,6 @@
 package com.kce.controller;
 
-import com.kce.enumeration.ResponseStatus;
+
 import com.kce.models.Student;
 import com.kce.response.CommonResponce;
 import com.kce.service.StudentService;
@@ -14,4 +14,9 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @PostMapping("/add")
+    public ResponseEntity<CommonResponce> addStudent(@RequestBody Student student){
+        CommonResponce response=studentService.addStudent(student);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
 }
