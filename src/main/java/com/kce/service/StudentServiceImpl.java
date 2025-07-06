@@ -72,6 +72,8 @@ public class StudentServiceImpl implements StudentService {
                 updateStudent.setName(student.getName());
                 updateStudent.setAge(student.getAge());
                 updateStudent.setEmail(student.getEmail());
+                updateStudent.setCourse(student.getCourse());
+                updateStudent.setCity(student.getCity());
 
                 Student updatedStudent = studentRepository.save(updateStudent);
                 response.setStatus(ResponseStatus.SUCCESS);
@@ -130,6 +132,26 @@ public class StudentServiceImpl implements StudentService {
             CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.FAILURE);
             response.setErrorMessage("Failed to add student : " + e.getMessage());
+            response.setCode(500);
+            return response;
+        }
+    }
+
+    @Override
+    public CommonResponce searchStudentsByName(String name) {
+        try{
+            List<Student> students = studentRepository.findByNameContainingIgnoreCase(name);
+            CommonResponce response = new CommonResponce();
+            response.setStatus(ResponseStatus.SUCCESS);
+            response.setSuccessMessage("Student Searched Successfully");
+            response.setData(students);
+            response.setCode(201);
+            return response;
+        }
+        catch (Exception e){
+            CommonResponce response = new CommonResponce();
+            response.setStatus(ResponseStatus.FAILURE);
+            response.setErrorMessage("Failed to search student : " + e.getMessage());
             response.setCode(500);
             return response;
         }

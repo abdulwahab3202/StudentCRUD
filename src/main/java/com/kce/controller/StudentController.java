@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -44,6 +42,13 @@ public class StudentController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<CommonResponce> deleteStudentByID(@PathVariable String id){
         CommonResponce response = studentService.deleteStudentByID(id);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<CommonResponce> searchStudentByName(@RequestParam String name){
+        CommonResponce response = studentService.searchStudentsByName(name);
         return ResponseEntity.status(response.getCode()).body(response);
     }
 }
