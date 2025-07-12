@@ -17,9 +17,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public CommonResponce getStudentByID(String id) {
+        CommonResponce response = new CommonResponce();
         try{
             Optional<Student> student =  studentRepository.findById(id);
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setSuccessMessage("Student retrieved successfully");
             response.setData(student);
@@ -27,7 +27,6 @@ public class StudentServiceImpl implements StudentService {
             return response;
         }
         catch (Exception e){
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.FAILURE);
             response.setErrorMessage("Failed to retrieve student");
             response.setCode(500);
@@ -99,9 +98,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public CommonResponce getStudents() {
+        CommonResponce response = new CommonResponce();
         try{
             List<Student> students = studentRepository.findAll();
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setSuccessMessage("Students retrieved successfully");
             response.setData(students);
@@ -109,7 +108,6 @@ public class StudentServiceImpl implements StudentService {
             return response;
         }
         catch (Exception e){
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setErrorMessage("Failed to retrieve students");
             response.setCode(500);
@@ -119,9 +117,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public CommonResponce addStudent(Student student) {
+        CommonResponce response = new CommonResponce();
         try{
             Student addedStudent = studentRepository.save(student);
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setSuccessMessage("Student Created Successfully");
             response.setData(addedStudent);
@@ -129,7 +127,6 @@ public class StudentServiceImpl implements StudentService {
             return response;
         }
         catch (Exception e){
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.FAILURE);
             response.setErrorMessage("Failed to add student : " + e.getMessage());
             response.setCode(500);
@@ -139,9 +136,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public CommonResponce searchStudentsByName(String name) {
+        CommonResponce response = new CommonResponce();
         try{
             List<Student> students = studentRepository.findByNameContainingIgnoreCase(name);
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.SUCCESS);
             response.setSuccessMessage("Student Searched Successfully");
             response.setData(students);
@@ -149,7 +146,6 @@ public class StudentServiceImpl implements StudentService {
             return response;
         }
         catch (Exception e){
-            CommonResponce response = new CommonResponce();
             response.setStatus(ResponseStatus.FAILURE);
             response.setErrorMessage("Failed to search student : " + e.getMessage());
             response.setCode(500);
