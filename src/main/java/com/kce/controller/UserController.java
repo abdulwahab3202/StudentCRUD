@@ -22,4 +22,9 @@ public class UserController {
         CommonResponce response = userService.register(users);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestBody Users user){
+        return userService.verify(user);
+    }
 }
