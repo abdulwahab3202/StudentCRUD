@@ -5,4 +5,5 @@ import com.kce.response.CommonResponce;
 
 public interface UserService {
     public CommonResponce register(Users users);
+    String verify(Users user);
 }

@@ -5,6 +5,9 @@ import com.kce.models.Users;
 import com.kce.repository.UserRepository;
 import com.kce.response.CommonResponce;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    AuthenticationManager authManager;
+
+    @Autowired
+    private JWTService jwtService;
 
     @Override
     public CommonResponce register(Users users) {
@@ -46,5 +55,13 @@ public class UserServiceImpl implements UserService {
             response.setCode(404);
             return response;
         }
+    }
+
+    @Override
+    public String verify(Users user) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+        if(authentication.isAuthenticated())
+            return jwtService.generateToken(user.getUsername());
+        return "failed";
     }
 }
