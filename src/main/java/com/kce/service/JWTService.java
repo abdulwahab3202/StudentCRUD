@@ -1,6 +1,7 @@
 package com.kce.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -37,7 +38,7 @@ public class JWTService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .and()
                 .signWith(getKey())
                 .compact();
@@ -57,12 +58,16 @@ public class JWTService {
         return claimResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token){
-        return Jwts.parser()
-                .verifyWith(getKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+    private Claims extractAllClaims(String token) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(getKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (JwtException e) {
+            throw new RuntimeException("Invalid JWT", e);
+        }
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
