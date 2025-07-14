@@ -1,4 +1,4 @@
-package com.kce.com.kce.config;
+package com.kce.config;
 
 import com.kce.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/user/register","/user/login").permitAll()
