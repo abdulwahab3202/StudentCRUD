@@ -20,11 +20,19 @@ public class StudentServiceImpl implements StudentService {
         CommonResponce response = new CommonResponce();
         try{
             Optional<Student> student =  studentRepository.findById(id);
-            response.setStatus(ResponseStatus.SUCCESS);
-            response.setSuccessMessage("Student retrieved successfully");
-            response.setData(student);
-            response.setCode(200);
-            return response;
+            if(student.isPresent()){
+                response.setStatus(ResponseStatus.SUCCESS);
+                response.setSuccessMessage("Student retrieved successfully");
+                response.setData(student);
+                response.setCode(200);
+                return response;
+            }
+            else{
+                response.setStatus(ResponseStatus.FAILURE);
+                response.setErrorMessage("Student Not Found");
+                response.setCode(500);
+                return response;
+            }
         }
         catch (Exception e){
             response.setStatus(ResponseStatus.FAILURE);
